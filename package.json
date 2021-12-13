@@ -1,0 +1,32 @@
+{
+  "name": "goit-node-cli-contacts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "list": "node index.js --action list",
+    "get": "node index.js --action get --id 5",
+    "add": "node index.js --action add --name Mango --email mango@gmail.com --phone 3222-22-22",
+    "remove": "node index.js --action remove --id=3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Artowod/goit-node-cli-contacts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Artowod/goit-node-cli-contacts/issues"
+  },
+  "homepage": "https://github.com/Artowod/goit-node-cli-contacts#readme",
+  "dependencies": {
+    "commander": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

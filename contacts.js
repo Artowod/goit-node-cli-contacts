@@ -6,12 +6,15 @@ const path = require("path");
 const contactsPath = path.dirname("./db/contacts.json");
 const ext = path.extname("./db/contacts.json");
 
+function readJsonFile() {
+  const result = fs.readFile(`${contactsPath}\\contacts.json`, "utf-8");
+  const resultedList = result.then(JSON.parse);
+  return resultedList;
+}
+
 async function listContacts() {
   try {
-    const dataFromFile = await fs.readFile(`${contactsPath}\\contacts.json`, "utf-8");
-    const listOfContacts = JSON.parse(dataFromFile);
-
-    return listOfContacts;
+    return readJsonFile();
   } catch (error) {
     console.log("getContactById error:", error);
   }
@@ -19,10 +22,7 @@ async function listContacts() {
 
 async function getContactById(contactId) {
   try {
-    const dataFromFile = await fs.readFile(`${contactsPath}\\contacts.json`, "utf-8");
-    const listOfContacts = JSON.parse(dataFromFile);
-
-    return listOfContacts.filter((item) => item.id == contactId);
+    return readJsonFile().then((data) => data.filter((item) => item.id == contactId));
   } catch (error) {
     console.log("getContactById error:", error);
   }
@@ -30,9 +30,9 @@ async function getContactById(contactId) {
 
 async function removeContact(contactId) {
   try {
-    const dataFromFile = await fs.readFile(`${contactsPath}\\contacts.json`, "utf-8");
-    const listOfContacts = JSON.parse(dataFromFile);
-    const listOfContactsAfterRemovimg = listOfContacts.filter((item) => item.id != contactId);
+    const listOfContactsAfterRemovimg = await readJsonFile().then((data) =>
+      data.filter((item) => item.id != contactId)
+    );
     await fs
       .writeFile(`${contactsPath}\\contacts.json`, JSON.stringify(listOfContactsAfterRemovimg), (err) => {
         if (err) throw err;
@@ -47,8 +47,8 @@ async function removeContact(contactId) {
 async function getNextUniqueId() {
   try {
     let lastId = 0;
-    const dataFromFile = await fs.readFile(`${contactsPath}\\contacts.json`, "utf-8");
-    const listOfContacts = JSON.parse(dataFromFile);
+
+    const listOfContacts = await readJsonFile();
     listOfContacts.forEach((item) => (+item.id > lastId ? (lastId = +item.id) : (lastId = lastId)));
     return +lastId + 1;
   } catch (error) {
@@ -69,8 +69,7 @@ async function addContact(name, email, phone) {
       console.log("newContact", newContact);
     });
 
-    const dataFromFile = await fs.readFile(`${contactsPath}\\contacts.json`, "utf-8");
-    const listOfContacts = JSON.parse(dataFromFile);
+    const listOfContacts = await readJsonFile();
     listOfContacts.push(newContact);
     console.log("listOfContacts", listOfContacts);
 
@@ -83,4 +82,4 @@ async function addContact(name, email, phone) {
   }
 }
 
-module.exports = { ext, contactsPath, listContacts, getContactById, removeContact, addContact };
+module.exports = { ext, contactsPath, listContacts, getContactById, removeContact, addContact, readJsonFile };

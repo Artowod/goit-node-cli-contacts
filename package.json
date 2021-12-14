@@ -9,7 +9,7 @@
     "start:dev": "nodemon index.js",
     "list": "node index.js --action list",
     "get": "node index.js --action get --id 5",
-    "add": "node index.js --action add --name Mango --email mango@gmail.com --phone 3222-22-22",
+    "add": "node index.js --action add --name TIMOFII --email timka@gmail.com --phone 2222-33-33",
     "remove": "node index.js --action remove --id=3"
   },
   "repository": {

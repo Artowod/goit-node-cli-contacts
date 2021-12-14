@@ -21,6 +21,7 @@ function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       contactsModule.listContacts().then(console.log);
+      //contactsModule.readJsonFile().then(console.log);
       break;
 
     case "get":
